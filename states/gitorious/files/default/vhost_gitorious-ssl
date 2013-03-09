@@ -1,0 +1,21 @@
+<IfModule mod_ssl.c>
+    <VirtualHost _default_:443>
+        DocumentRoot /var/www/gitorious/public
+        ErrorLog /var/log/apache2/gitorious-error.log
+ 
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+ 
+        CustomLog /var/log/apache2/gitorious-ssl_access.log combined
+        SSLEngine on
+        SSLCertificateFile    /etc/ssl/certs/ssl-cert-snakeoil.pem
+        SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+        BrowserMatch ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
+        <IfModule mod_xsendfile.c>
+            XSendFile on
+            XSendFilePath /var/www/gitorious/tarballs
+        </IfModule>
+ 
+    </VirtualHost>
+</IfModule>

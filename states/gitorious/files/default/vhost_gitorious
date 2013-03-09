@@ -1,0 +1,16 @@
+<VirtualHost *:80>
+   ServerName {{ grains.id }}
+   DocumentRoot /var/www/gitorious/public
+ 
+   ErrorLog /var/log/apache2/gitorious-error.log
+   # Possible values include: debug, info, notice, warn, error, crit,
+   # alert, emerg.
+   LogLevel warn
+ 
+   CustomLog /var/log/apache2/gitorious-access.log combined
+ 
+   <IfModule mod_xsendfile.c>
+     XSendFile on
+     XSendFilePath /var/www/gitorious/tarballs
+   </IfModule>
+</VirtualHost>
