@@ -1,5 +1,5 @@
 include:
-  - repo.{{ grains['os']|lower }}.salt
+  - repo.{{ grains.os|lower }}.salt
 
 net.core.rmem_max:
   sysctl.present:

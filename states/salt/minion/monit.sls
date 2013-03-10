@@ -12,3 +12,4 @@ include:
       - service: monit
     - require:
       - service.running: salt-minion
+      - pkg.installed: monit

@@ -2,7 +2,7 @@ openssh-server:
   pkg.installed: []
   file.managed:
     - name: /etc/ssh/sshd_config
-    - source: salt://ssh/files/hosts/{{ grains.id }}.sshd_config
+    - source: salt://ssh/files/hosts/{{ grains.id }}_sshd_config
     - user: root
     - group: root
     - mode: 644

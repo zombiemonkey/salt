@@ -46,7 +46,7 @@ salt-minion:
     - require:
       - file.directory: /etc/salt/minion.d
     - source:
-      - salt://salt/minion/files/hosts/{{ grains['host'] }}.options.conf
+      - salt://salt/minion/files/hosts/{{ grains.id }}_options.conf
       - salt://salt/minion/files/defaults/options.conf
 
 /etc/security/limits.conf:
