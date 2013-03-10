@@ -1,12 +1,7 @@
-{% set pg_version = pillar['postgresql']['version'].replace('.', '_') %}
-{% set pg_config_base = '/etc/postgresql/{0}/main'.format(pg_version) %}
-{% set pg_config_source = 'postgresql/server/{0}/files'.format(pg_version) %}
-{% set pg_data_base = '/srv/pgsql/{0}'.format(pg_version) %}
-
 include:
-  - postgresql.server.{{ pg_version }}
+  - postgresql.server
 
-{% for database in pillar.get('postgresql.databases').get('absent', []) %}
+{% for database in pillar.get('postgresql.databases', {}).get('absent', []) %}
 postgres_database_{{ database }}:
   postgres_database.absent:
     - runas: postgres

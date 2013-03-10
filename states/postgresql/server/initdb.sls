@@ -1,12 +1,9 @@
-{% set pg_config_base = '/etc/postgresql/{0}/main'.format(pillar['postgresql']['version']) %}
-{% set pg_config_source = 'postgresql/server/{0}/files'.format(pillar['postgresql']['version']) %}
 {% set pg_data_base = '/srv/pgsql/{0}'.format(pillar['postgresql']['version']) %}
-{% set find_cmd = 'find {0}/data -mindepth 1 -maxdepth 1 -type d -printf "%f\n"'.format(pg_data_base) %}
 
 include:
   - postgresql.server
 
-{{ pg_config_base }}:
+/etc/postgresql/{{ pillar.postgresql.version }}/main:
   file.directory:
     - user: root
     - group: postgres

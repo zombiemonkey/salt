@@ -1,7 +1,7 @@
 include:
   - postgresql.server
 
-{% for user in pillar.get('postgresql.roles').get('absent', []) %}
+{% for user in pillar.get('postgresql.roles', {}).get('absent', []) %}
 postgres_user_{{ user }}:
   postgres_user.absent:
     - runas: postgres
