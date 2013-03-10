@@ -7,7 +7,7 @@ ferm:
   file.managed:
     - name: /etc/ferm/ferm.conf
     - source:
-      - salt://ferm/files/hosts/{{ grains.id }}/ferm.conf
+      - salt://ferm/files/hosts/{{ grains.id }}_ferm.conf
       - salt://ferm/files/default/ferm.conf
     - user: root
     - group: root

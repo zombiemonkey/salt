@@ -7,7 +7,7 @@ postfix:
 
 root:
   alias.present:
-    - target: jasong@godden.id.au
+    - target: {{ pillar.alias.root }}
     - require:
       - pkg.installed: mailutils
 

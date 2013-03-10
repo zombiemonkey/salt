@@ -5,7 +5,7 @@ mysql-server:
       - python-mysqldb
   file.managed:
     - name: /etc/mysql/my.cnf
-    - source: salt://mysql/files/hosts/{{ grains.id }}/my.cnf
+    - source: salt://mysql/server/files/hosts/{{ grains.id }}_my.cnf
     - mode: 644
     - user: root
     - group: root
@@ -31,34 +31,27 @@ phpmyadmin:
     - signal: restart
     - watch:
       - file.symlink: /etc/apache2/sites-enabled/phpmyadmin.conf
+
+{% for role, role_config in pillar.get('mysql.roles', {}).get('present', {}).iteritems() %}
+mysql_role_{{ role }}:
   mysql_user.present:
-    - name: admin
-    - host: localhost
-    - password: foobar
+    - name: {{ role }}
+    - host: {{ role_config.host }}
+    - password: {{ role_config.password }}
     - require:
       - service.running: mysql-server
   mysql_grants.present:
-    - grant: all privileges
-    - database: '*.*'
-    - user: admin
-    - host: localhost
+    - grant: {{ role_config.grant }}
+    - database: {{ role_config.grant_database }}
+    - user: {{ role }}
+    - host: {{ role_config.host }}
     - require:
-      - mysql_user.present: admin
+      - mysql_user.present: mysql_role_{{ role }}
+{% endfor %}
 
-gitorious:
+{% for database in pillar.get('mysql.databases', []) %}
+mysql_database_{{ database }}:
   mysql_database.present:
     - require:
       - service.running: mysql-server
-  mysql_user.present:
-    - host: master.localmonkey
-    - password: hi3Shaa1
-    - require:
-      - service.running: mysql-server
-  mysql_grants.present:
-    - grant: all privileges
-    - database: gitorious.*
-    - user: gitorious
-    - require:
-      - mysql_database.present: gitorious
-      - mysql_user.present: gitorious
-
+{% endfor %}
