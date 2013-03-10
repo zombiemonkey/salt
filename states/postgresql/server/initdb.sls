@@ -18,7 +18,7 @@ include:
   file.directory:
     - user: postgres
     - group: postgres
-    - mode: 700
+    - dir_mode: 700
     - makedirs: True
     - recurse:
       - user
@@ -73,4 +73,3 @@ relocate_pg_xlog:
     - onlyif: test ! -L {{ pg_data_base }}/system/pg_xlog
     - require:
       - cmd.run: pre_relocate_pg_xlog
-
