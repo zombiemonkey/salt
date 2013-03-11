@@ -8,13 +8,19 @@ base:
     - reboot
   '*.localmonkey':
     - mail
+  'jumphost.localmonkey':
+    - ssh.server
   'pgsql.localmonkey':
     - ferm
-    - postgresql.server.9_2
-    - postgresql.server.9_2.tablespaces
-    - postgresql.server.9_2.users
+    - postgresql.server
+    - postgresql.server.tablespaces
+    - postgresql.server.roles
+    - postgresql.server.databases
   'mysql.localmonkey':
-    - mysql
+    - mysql.server
+    - mysql.roles
+    - mysql.databases
+    - phpmyadmin
     - ferm
   'master.localmonkey':
     - users.accounts.git
