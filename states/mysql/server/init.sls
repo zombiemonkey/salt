@@ -16,4 +16,3 @@ mysql-server:
     - enable: True
     - watch:
       - file.managed: /etc/mysql/my.cnf
-

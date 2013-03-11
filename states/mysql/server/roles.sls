@@ -1,6 +1,14 @@
 include:
   - mysql.server
 
+{% for role in pillar.get('mysql.roles', {}).get('absent', []) %}
+mysql_role_{{ role }}:
+  mysql_user.absent:
+    - name: {{ role }}
+    - require:
+      - service.running: mysql-server
+{% endfor %}
+
 {% for role, role_config in pillar.get('mysql.roles', {}).get('present', {}).iteritems() %}
 mysql_role_{{ role }}:
   mysql_user.present:
@@ -17,4 +25,3 @@ mysql_role_{{ role }}:
     - require:
       - mysql_user.present: mysql_role_{{ role }}
 {% endfor %}
-
